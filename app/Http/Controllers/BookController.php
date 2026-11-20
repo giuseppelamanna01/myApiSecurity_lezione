@@ -99,6 +99,9 @@ class BookController extends Controller
             return response()->json(['error' => 'Book not found'], 404);
         }
 
+        if($book->user_id !== auth()->id()){
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
         // SECURE
         // if(!$user = Auth::user()){
         //     return response()->json(['error' => 'Not autorised'], 401);
@@ -138,6 +141,10 @@ class BookController extends Controller
         if (!$book) {
             return response()->json(['error' => 'Book not found'], 404);
         }
+
+        if($book->user_id !== auth()->id()){
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
         // SECURE
         // if(!$user = Auth::user()){
         //     return response()->json(['error' => 'Not autorised'], 401);
@@ -145,6 +152,7 @@ class BookController extends Controller
         // if($user->id != $book->user_id){
         //     return response()->json(['error' => 'Not autorised'], 401);
         // }
+
 
         // UNSECURE
         $book->delete();
